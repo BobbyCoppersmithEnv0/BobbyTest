@@ -35,8 +35,7 @@ data "aws_vpc" "selected" {
   id = var.vpc_id
 }
 
-root_block_device {
-    volume_size = var.ebs_size_gb
+aws_ebs_volume {
     volume_type = var.ebs_vol 
     encrypted   = true
 }
