@@ -12,7 +12,7 @@ variable "vpc_id" {
   type = string
 }
 
-variable "ebs_size" {
+variable "ebs_size_gb" {
   type    = number
   default = 10
 }
