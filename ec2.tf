@@ -35,10 +35,11 @@ data "aws_vpc" "selected" {
   id = var.vpc_id
 }
 
-aws_ebs_volume {
-    volume_type = var.ebs_vol 
-    encrypted   = true
-}
+root_block_device = [
+    {
+      volume_type = var.ebs_volume_type
+      volume_size = 10
+    }
 
 data "aws_subnet_ids" "selected" {
   vpc_id = data.aws_vpc.selected.id
