@@ -37,9 +37,9 @@ data "aws_vpc" "selected" {
 
 root_block_device {
     volume_size = var.ebs_size_gb
-    volume_type = "gp3" # General Purpose SSD
+    volume_type = var.ebs_vol 
     encrypted   = true
-    # delete_on_termination defaults to true for the root volume
+}
 
 data "aws_subnet_ids" "selected" {
   vpc_id = data.aws_vpc.selected.id
