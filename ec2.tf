@@ -7,6 +7,7 @@ module "acme-ec2" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
 
+
   subnet_ids = data.aws_subnet_ids.selected.ids
 
   associate_public_ip_address = true
@@ -33,6 +34,12 @@ data "aws_ami" "ubuntu" {
 data "aws_vpc" "selected" {
   id = var.vpc_id
 }
+
+root_block_device {
+    volume_size = var.ebs_size_gb
+    volume_type = "gp3" # General Purpose SSD
+    encrypted   = true
+    # delete_on_termination defaults to true for the root volume
 
 data "aws_subnet_ids" "selected" {
   vpc_id = data.aws_vpc.selected.id
