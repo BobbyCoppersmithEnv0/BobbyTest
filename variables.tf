@@ -16,3 +16,8 @@ variable "ebs_size_gb" {
   type    = number
   default = 10
 }
+
+variable "ebs_vol" {
+  type    = string
+  default = gp3
+}
