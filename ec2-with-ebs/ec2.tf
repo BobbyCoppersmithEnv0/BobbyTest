@@ -7,10 +7,11 @@ module "acme-ec2" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
 
-  subnet_id                   = data.aws_subnet.selected_az.id
+  subnet_ids = data.aws_subnet_ids.selected.ids
+
   associate_public_ip_address = true
 
-  # NEW: Extra EBS data volume with size from variable
+ # NEW: Extra EBS data volume with size from variable
   ebs_block_device = [
     {
       device_name           = "/dev/sdf"
@@ -20,6 +21,7 @@ module "acme-ec2" {
       encrypted             = false
     }
   ]
+
 
   tags = {
     Terraform = "true"
@@ -44,14 +46,6 @@ data "aws_vpc" "selected" {
   id = var.vpc_id
 }
 
-# Data source to select a single subnet based on VPC, Availability Zone, and Tag
-data "aws_subnet" "selected_az" {
-  vpc_id            = data.aws_vpc.selected.id
-  availability_zone = var.availability_zone
-
-  # Filter by tag to ensure we select the correct type of subnet (e.g., Public)
-  filter {
-    name   = "tag:Name"
-    values = ["*public*"]
-  }
+data "aws_subnet_ids" "selected" {
+  vpc_id = data.aws_vpc.selected.id
 }
