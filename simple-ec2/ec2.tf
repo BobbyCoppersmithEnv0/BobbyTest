@@ -2,7 +2,7 @@ module "acme-ec2" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 2.0"
 
-  name = var.name
+  # name = var.name
 
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
